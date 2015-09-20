@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+	<title>Registro</title>
+
+<script type="text/javascript">
+
+ 
+
+ function addOthers(){
+  var selectChoice=document.getElementById('especialidad');
+  var selectedValue = selectChoice.options[selectChoice.selectedIndex].value;
+
+ if(selectedValue =='otros'){
+  var label = document.createElement("otraEspecialidad");
+var element = document.createElement("input");
+label.innerHTML = "¿Que especialidad?    ";
+label.setAttribute("name","etiqueta")
+element.setAttribute("name","otra");
+
+var foo = document.getElementById("other");
+foo.appendChild(label);
+foo.appendChild(element);
+ }
+}
+
+
+function vervalores(){
+ var sAux="";
+ var frm = document.getElementById("registro");
+ for (i=1;i<frm.elements.length;i++)
+ {
+ sAux += "NOMBRE: " + frm.elements[i].name + " ";
+ sAux += "VALOR: " + frm.elements[i].value + "\n" ;
+ }
+ alert(sAux);
+} 
+
+</script> 
+
+  </head>
+  <body>
+	<div>
+		<form id='registro' name='registro' onSubmit='vervalores()'> 
+			Nombre y apellidos(*):<br>
+  <input type="text" name="name">
+  <br>
+  Dirección de correo(*):<br>
+  <input type="text" name="email">
+  <br>
+  Password:<br>
+  <input type="password" name="passw1">
+  <br>
+  Repite password:<br>
+  <input type="password" name="passw2">
+  <br>
+  Número de teléfono:<br>
+  <input type="text" name="phone">
+  <br>
+
+ Especialidad(*):<br>
+	<select id="especialidad" onchange="addOthers()" name="Especialidad">
+  		<option value="software">Ingeniería del Software</option>
+  		<option value="hardware">Ingeniería de Computadores</option>
+  		<option value="computacion">Computación</option>
+      <option value="otros">otros</option>
+	</select>
+  <div id="other"></div>
+
+  <br>
+  Tecnologías y herramientas en las que está interesado:<br>
+  <input type="textarea" name="interested">
+  </br>
+  
+  <input name="Submit" type="submit">
+
+		</form>
+
+	</div>
+</body>
+</html>
