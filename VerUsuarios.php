@@ -39,6 +39,11 @@
 			<?php
 				
 				while ($row = mysqli_fetch_array($result)) {
+				$email =$row['email'];	
+				$result2=mysqli_query($link, "SELECT * FROM Foto WHERE email LIKE '$email'");
+				$imagerow = mysqli_fetch_assoc($result2);
+
+				
 			?>
 				<tr>
 					<td><?php echo $row["nomApellidos"]; ?></td>
@@ -47,11 +52,13 @@
 					<td><?php echo $row["telefono"]; ?></td>
 					<td><?php echo $row["especialidad"]; ?></td>
 					<td><?php echo $row["otrosIntereses"]; ?></td>
-					<td><?php echo $row["foto"]; ?></td>
+					<td><?php echo '<img src="data:image/png;base64,'.base64_encode( $imagerow['imagen'] ).'" width=200 height =200/>'; ?></td>
+					
 				</tr>
 			
 			<?php
 				}
+			mysqli_free_result($result2);
 			mysqli_free_result($result);
 			mysqli_close($link);
 			?>
