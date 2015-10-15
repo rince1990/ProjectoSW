@@ -22,11 +22,28 @@ $sql = "INSERT INTO Usuario (email, nomApellidos, password, telefono, especialid
 	VALUES ('$email','$name' , '$password_enc', '$phone', '$especialidad', '$intereses')";
 
 
-registrar_usuario($link,$sql);
-subir_foto($link,$image,$email);
+if
+(validarDatos($email))
+{
+	registrar_usuario($link,$sql);
+	subir_foto($link,$image,$email);
+}else{
+	echo "Email no validado, vuelve a la p&aacutegina de formulario -> <a href='registro_html5.html' >REGISTRO</a>";
+}
 
 
 mysqli_close($link);
+
+
+
+function validarDatos($email)
+{
+	
+	return filter_var($email, FILTER_VALIDATE_REGEXP,
+			array("options"=>array("regexp"=>"/^[A-Za-z]+[0-9]{3}@ikasle.ehu.(eus|es)$/"))); // <-- look here
+
+}
+
 
 
 
