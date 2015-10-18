@@ -8,7 +8,7 @@ $link = Conectar();
 $name = mysqli_real_escape_string($link, $_POST['name']);
 $email = mysqli_real_escape_string($link, $_POST['email']);
 $password = mysqli_real_escape_string($link, $_POST['passw1']);
-$password_enc = md5($password);
+//$password_enc = md5($password);
 $phone = mysqli_real_escape_string($link, $_POST['phone']);
 $especialidad = mysqli_real_escape_string($link, $_POST['Especialidad']);
 if ($especialidad == 'otros')
@@ -22,13 +22,11 @@ $sql = "INSERT INTO Usuario (email, nomApellidos, password, telefono, especialid
 	VALUES ('$email','$name' , '$password_enc', '$phone', '$especialidad', '$intereses')";
 
 
-if
-(validarDatos($email))
-{
+if(validarDatos()){
 	registrar_usuario($link,$sql);
 	subir_foto($link,$image,$email);
 }else{
-	echo "Email no validado, vuelve a la p&aacutegina de formulario -> <a href='registro_html5.html' >REGISTRO</a>";
+	echo "Datos no validos, vuelve a la p&aacutegina de formulario -> <a href='registro_html5.html' >REGISTRO</a>";
 }
 
 
@@ -36,17 +34,19 @@ mysqli_close($link);
 
 
 
-function validarDatos($email)
+function validarDatos()
 {
-	
-	return filter_var($email, FILTER_VALIDATE_REGEXP,
-			array("options"=>array("regexp"=>"/^[A-Za-z]+[0-9]{3}@ikasle.ehu.(eus|es)$/"))); // <-- look here
+	if (!filter_var($_REQUEST['name'], FILTER_VALIDATE_REGEXP,array("options"=>array("regexp"=>"/([A-Z][a-z]*\s){2,3}[A-Z][a-z]*/")))) //nombre
+		return false;
+	if (!filter_var($_REQUEST['email'], FILTER_VALIDATE_REGEXP,array("options"=>array("regexp"=>"/^[A-Za-z]+[0-9]{3}@ikasle.ehu.(eus|es)$/")))) //email
+		return false;
+	if (!filter_var($_REQUEST['passw1'], FILTER_VALIDATE_REGEXP,array("options"=>array("regexp"=>"/^[\w]{6,20}$/")))) //contraseña
+		return false;
+	if (!filter_var($_REQUEST['phone'], FILTER_VALIDATE_REGEXP,array("options"=>array("regexp"=>"/^[0-9]{9}$/")))) //telefono
+		return false;
 
+	return true;
 }
-
-
-
-
 
 function subir_foto($link,$file,$email)
 {
