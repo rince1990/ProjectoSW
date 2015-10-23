@@ -84,7 +84,7 @@ function registrar_usuario($link,$sql)
 		printf("Usuario registrado correctamente</br>");
 		printf("Seras redirigido a la pagina de usuarios en 10 segundos, o puedes hacer click <a href='VerUsuarios.php'>aqui</a><br/> ");
 		header( "refresh:10;url=VerUsuarios.php" );
-		//die();
+		die();
 	}else
 
 		printf("No se ha podido insertar el usuario en la base de datos:</br> %s>", $link->error);
