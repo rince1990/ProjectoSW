@@ -6,12 +6,12 @@
 (!comprobarLogueado())
 	{ ?>
 <form action="login.php" method="post" class="login">
-    <div>Username<input name="user" type="text" value="jhacker001@ikasle.ehu.es"></div>
+    <div>Username<input name="user" type="text" value="mgalletas001@ikasle.ehu.es"></div>
     <div>Password<input name="pass" type="password" value="123456"></div>
     <div><input name="login" type="submit" value="login"></div>
 </form>
 
-<a href="layout.html">Atras</a>
+<a href="layout.php">Atras</a>
 
 <?php
 }
@@ -49,8 +49,6 @@ function verificarLogin($user,$pass)
 	if
 	( $result->num_rows == 0)
 	{
-		echo $user;
-		echo $pass_c;
 		echo'<script type="text/javascript">
                 alert("Usuario o Contrasenia Incorrecta.");
                 window.location="login.php"
@@ -100,25 +98,6 @@ function guardarConexion($email)
 
 }
 
-
-function guardarAccion($email,$accion)
-{
-
-	if
-	(isset($_SESSION["codSesion"]))
-		$cod = $_SESSION["codSesion"];
-	else
-		$cod=NULL;
-
-	date_default_timezone_set("Europe/Madrid");
-	$date = date('Y-m-d H:i:s');
-	$sql = "INSERT INTO Acciones (cod_conexion,email,accion,time) VALUES ('$cod','$email','$accion','$date')";
-
-	$link = Conectar();
-	$link->query($sql);
-	$link->close();
-
-}
 
 
 function comprobarLogueado()

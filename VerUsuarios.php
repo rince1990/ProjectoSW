@@ -64,7 +64,7 @@
 			?>
 		</table>
 		<br/>		
-		<a id="index" href="layout.html">Inicio</a>
+		<a id="index" href="layout.php">Inicio</a>
 	</body>
 </html>
 				

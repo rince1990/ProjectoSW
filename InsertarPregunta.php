@@ -1,6 +1,7 @@
 <?php
 
 include ("conectbd.php");
+include ("funciones.php");
 session_start();
 
 
@@ -23,6 +24,7 @@ if
 	if (mysqli_query($link, $sql))
 	{
 		echo 'Pregunta insertada correctamente';
+		guardarAccion($_SESSION['useremail'],INSERTAR);
 	}else
 	{
 		printf("No se ha podido insertar la pregunta en la base de datos:</br> %s>", $link->error);
@@ -47,7 +49,7 @@ function comprobarLogueado()
 	<body>
 	<?php if (comprobarLogueado())
 	{?>
-		<form id='pregunta' method="post" action='InsertarPregunta.php'>
+		<form id='pregunta' method="post" action='insertarPregunta.php'>
 			Pregunta:(*):<br/>
 			<textarea name="question" rows="4" cols="50" placeholder="Inserta la pregunta..." required></textarea><br/><br/>
 			Respuesta:(*):<br/>

@@ -22,6 +22,7 @@
 	<body>
 		<?php
 include ("conectbd.php");
+include ("funciones.php");
 $link=Conectar();
 
 
@@ -30,6 +31,7 @@ $link=Conectar();
 
 		<div class="center">
 				<?php
+					session_start();
 if
 (!isset($_GET['cod']))
 {
@@ -48,7 +50,7 @@ else
 
 $reg = mysqli_fetch_assoc($result);
 $cod =$reg['cod'];
-
+guardarAccion($_SESSION['useremail'],VERPREGUNTAS);
 
 
 ?>
