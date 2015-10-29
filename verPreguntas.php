@@ -24,6 +24,7 @@
 include ("conectbd.php");
 include ("funciones.php");
 $link=Conectar();
+session_start();
 
 
 
@@ -31,7 +32,6 @@ $link=Conectar();
 
 		<div class="center">
 				<?php
-					session_start();
 if
 (!isset($_GET['cod']))
 {

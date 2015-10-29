@@ -50,6 +50,7 @@ function visualizarLinkInsertarPregunta()
 	<nav class='main' id='n1' role='navigation'>
 		<span><a href='layout.html'>Inicio</a></spam>
 		<span><a href='verPreguntas.php'>Preguntas</a></spam>
+		<span><a href='verPreguntasXML.php'>PreguntasXML</a></spam>
 		<span><a href='creditos.html'>Creditos</a></spam>
 		<?php visualizarLinkInsertarPregunta() ?>
 	</nav>
