@@ -48,12 +48,12 @@ function insertarEnXML($question,$answer,$complejidad,$subject)
 	$itemBody->addChild('p',$question);
 	$correctResponse=$assessmentItem->addChild('correctResponse');
 	$correctResponse->addChild('value', $answer);
-	$return=$xml->asXML('preguntas.xml');
+	$return=$xml->asXML('XML/preguntas.xml');
 
 	if ($return==1)
 	{
 		echo 'Pregunta insertada correctamente en preguntas.xml<br/>';
-		echo '<br/><a href="VerPreguntasXML.php"> Ver Preguntas </a>';
+		echo '<br/><a href="verPreguntasXML.php"> Ver Preguntas </a>';
 	}else
 	{
 		echo 'La pregunta no se ha insertado en preguntas.xml';
