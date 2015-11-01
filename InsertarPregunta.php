@@ -31,10 +31,11 @@ function comprobarLogueado()
 function insertarEnXML($question,$answer,$complejidad,$subject)
 {
 
+
+
+
 	$xml = simplexml_load_file('XML/preguntas.xml');
 	$assessmentItem=$xml->addChild('assessmentItem');
-
-	//no va este if
 	if ($_REQUEST['complejidad'] == 0)
 	{
 		$assessmentItem->addAttribute('complexity', 'sin complejidad');
@@ -48,8 +49,11 @@ function insertarEnXML($question,$answer,$complejidad,$subject)
 	$itemBody->addChild('p',$question);
 	$correctResponse=$assessmentItem->addChild('correctResponse');
 	$correctResponse->addChild('value', $answer);
-	$return=$xml->asXML('XML/preguntas.xml');
+	
+	$xml = formatXML($xml);	
 
+	$return=$xml->asXML('XML/preguntas.xml');
+	
 	if ($return==1)
 	{
 		echo 'Pregunta insertada correctamente en preguntas.xml<br/>';
@@ -59,6 +63,20 @@ function insertarEnXML($question,$answer,$complejidad,$subject)
 		echo 'La pregunta no se ha insertado en preguntas.xml';
 	}
 }
+
+
+//gives output format to XML file
+function formatXML($xml)
+{
+	$dom = new DOMDocument('1.0');
+	$dom->preserveWhiteSpace = false;
+	$dom->formatOutput = true;
+	$dom->loadXML($xml->asXML());
+	$xml = new SimpleXMLElement($dom->saveXML());
+	return $xml;
+
+}
+
 
 
 function insertarEnBD($link,$question,$answer,$complejidad)
