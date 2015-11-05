@@ -1,26 +1,6 @@
 
-<?php 
-		session_start();
-
-	if
-(!comprobarLogueado())
-	{ ?>
-<form action="login.php" method="post" class="login">
-    <div>Username<input name="user" type="text" value="mgalletas001@ikasle.ehu.es"></div>
-    <div>Password<input name="pass" type="password" value="123456"></div>
-    <div><input name="login" type="submit" value="login"></div>
-</form>
-
-<a href="layout.php">Atras</a>
-
 <?php
-}
-else
-{
-	echo 'Ya estas logueado '.$_SESSION["username"].' <a href="layout.php">Atras</a>';
-}
-
-
+session_start();
 include ("conectbd.php");
 
 
@@ -106,3 +86,45 @@ function comprobarLogueado()
 	else return false;
 
 }
+
+
+?>
+<!DOCTYPE html>
+<html>
+	<head>
+<?php include('includes/metaAndCSS.html'); ?>
+	<title>Login</title>
+	</head>
+  <body>
+  <div id='page-wrap'>
+
+  	<?php include('includes/header.php'); ?>
+	<?php include('includes/navigationMenu.php'); ?>
+
+    <section class="main" id="s1">
+
+	<div>
+	<?php if
+(!comprobarLogueado())
+	{ ?>
+<form action="login.php" method="post" class="login">
+    <div>Username<input name="user" type="text" value="mgalletas001@ikasle.ehu.es"></div>
+    <div>Password<input name="pass" type="password" value="123456"></div>
+    <div><input name="login" type="submit" value="login"></div>
+</form>
+
+<a href="layout.php">Atras</a>
+
+<?php
+}
+else
+{
+	echo 'Ya estas logueado '.$_SESSION["username"].' <a href="layout.php">Atras</a>';
+}?>
+
+	</div>
+    </section>
+	<?php include('includes/footer.html'); ?>
+</div>
+</body>
+</html>

@@ -1,11 +1,12 @@
+
+<?php session_start(); ?>
+
 <!DOCTYPE html>
-
 <html>
-<head>
-    <meta charset="utf-8">
-
-    <title>Registro</title>
-    <script type="text/javascript">
+	<head>
+<?php include('includes/metaAndCSS.html'); ?>
+	<title>Obtener datos</title>
+	<script type="text/javascript">
 function completar(){
     var enc=false;
     
@@ -32,11 +33,17 @@ function completar(){
     
     
       </script>
-</head>
+	</head>
+  <body>
+  <div id='page-wrap'>
+	
+  	<?php include('includes/header.php'); ?>
+	<?php include('includes/navigationMenu.php'); ?>
 
-<body>
-    <div align="center">
-        <h1>Buscar datos de usuario ...</h1>
+    <section class="main" id="s1">
+
+	<div>
+	<h1>Buscar datos de usuario ...</h1>
         <object id="datos" data="XML/usuarios.xml" type="text/xml" style="display:none">
             </object>
 
@@ -55,6 +62,10 @@ function completar(){
             <br>
             <input type="button" value="Autocompletar" onclick="javascript:completar()">
         </form>
-    </div>
+	</div>
+    </section>
+	<?php include('includes/footer.html'); ?>
+</div>
 </body>
 </html>
+

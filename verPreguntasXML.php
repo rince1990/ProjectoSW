@@ -1,24 +1,23 @@
+
+			
+			<?php session_start(); ?>
+
+<!DOCTYPE html>
 <html>
 	<head>
-		 <meta charset="UTF-8">
-		<style>
-			body {
-			    background-color: #B8B8B8;
-				text-align: center;
-				padding-top: 5%;
-				padding-right: 25%;
-				padding-left: 25%;
-				font-family: "Times New Roman", Times, serif;
-				font-size: 16px;
-			}
-
-			#pregunta {
-				font-size: 20px;
-			}
-		</style>
+<?php include('includes/metaAndCSS.html'); ?>
+	<title>Quiz Game XML</title>
 	</head>
-	<body>
-		<table border=1;>
+  <body>
+  <div id='page-wrap'>
+	
+  	<?php include('includes/header.php'); ?>
+	<?php include('includes/navigationMenu.php'); ?>
+
+    <section class="main" id="s1">
+
+	<div>
+	<table border=1;>
 			<tr>
 			<th>Enunciado</th><th>Complejidad</th><th>Temática</th>
 			</tr>	
@@ -51,6 +50,10 @@ foreach ($xml->children() as $assessmentItem)
 		</table>
 		<br/>
 		<a id="index" href="layout.php">Inicio</a>
-	</body>
-</html>
-				
+
+	</div>
+    </section>
+	<?php include('includes/footer.html'); ?>
+</div>
+</body>
+</html>	

@@ -1,9 +1,7 @@
 <?php
-
+session_start();
 include ("conectbd.php");
 include ("funciones.php");
-session_start();
-
 
 
 
@@ -103,12 +101,34 @@ function insertarEnBD($link,$question,$answer,$complejidad)
 
 
 ?>
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>Insertar Pregunta</title>
-	</head>
+			</head>
 
 	<body>
+	
+	</body>
+
+</html>
+
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+<?php include('includes/metaAndCSS.html'); ?>
+	<title>Insertar Pregunta</title>
+	</head>
+  <body>
+  <div id='page-wrap'>
+	
+  	<?php include('includes/header.php'); ?>
+	<?php include('includes/navigationMenu.php'); ?>
+
+    <section class="main" id="s1">
+
+	<div>
 	<?php if (comprobarLogueado())
 	{?>
 		<form id='pregunta' method="post" action='insertarPregunta.php'>
@@ -135,6 +155,9 @@ else echo "Debes estar logueado para acceder a este contenido.";
 ?>
 		<br/>
 		<a href="layout.php">Atras</a>
-	</body>
-
+	</div>
+    </section>
+	<?php include('includes/footer.html'); ?>
+</div>
+</body>
 </html>

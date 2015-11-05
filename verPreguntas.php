@@ -1,37 +1,37 @@
-<html>
-	<head>
-		<title></title>
-		<style>
-			body {
-			    background-color: #B8B8B8;
-				text-align: center;
-				padding-top: 5%;
-				padding-right: 25%;
-				padding-left: 25%;
-				font-family: "Times New Roman", Times, serif;
-				font-size: 16px;
-			}
-
-			#pregunta {
-				font-size: 20px;
-			}
-		</style>
 
 
-	</head>
-	<body>
-		<?php
+		<div class="center">
+					</body>
+</html>
+
+
+<?php
+session_start();
 include ("conectbd.php");
 include ("funciones.php");
 $link=Conectar();
-session_start();
+
 
 
 
 ?>
 
-		<div class="center">
-				<?php
+<!DOCTYPE html>
+<html>
+	<head>
+<?php include('includes/metaAndCSS.html'); ?>
+	<title>Quiz Game</title>
+	</head>
+  <body>
+  <div id='page-wrap'>
+
+  	<?php include('includes/header.php'); ?>
+	<?php include('includes/navigationMenu.php'); ?>
+
+    <section class="main" id="s1">
+
+	<div>
+	<?php
 if
 (!isset($_GET['cod']))
 {
@@ -101,6 +101,11 @@ function buttonSiguienteEnabled($codsiguiente)
 			<a href="?cod=<?php echo $codsiguiente?>" ><button type="button" style="float: right;"<?php buttonSiguienteEnabled($codsiguiente);?>> >> </button></a>
 		<br/>
 		<a id="index" href="layout.php">Inicio</a>
-	</body>
+
+	</div>
+    </section>
+	<?php include('includes/footer.html'); ?>
+</div>
+</body>
 </html>
 				

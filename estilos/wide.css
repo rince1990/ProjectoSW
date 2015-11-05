@@ -4,5 +4,44 @@ body				{background: #999;}
 
 nav					{float: left; width: 15%; height: 200px;}
 nav span			{margin: 0px 100px 0px 0px;}
-section				{float: right; width: 80%; height: 200px;}
+section				{float: right; width: 80%; /*height: 200px*/;}
 footer				{clear: both; display: block;}
+
+
+/* CSS para la pagina creditos*/
+p.titles{
+	font-weight: bold;
+	font-size: 20px;	
+}
+#foto{
+	height : 150px;
+	width : 150px;
+	border-style: dashed;
+}
+#atras{
+	font-size: 20px;
+	border-style: double;
+	font-weight: bold; 
+}
+
+/* END CSS creditos*/
+
+
+
+/* CSS para la pagina preguntas*/
+
+			#pregunta {
+				font-size: 20px;
+			}
+/* END CSS verPreguntas*/
+
+
+/* CSS para la pagina usuarios*/
+
+			#tablaUsuarios, #tablaUsuarios td, #tablaUsuarios tr,#tablaUsuarios th,  {
+				border:1px solid black; 
+				padding: 10px;
+				    border-collapse: collapse;
+
+			}
+/* END CSS verUsuarios*/

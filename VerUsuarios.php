@@ -1,31 +1,27 @@
-<html>
-	<head>
-		<title></title>
-		<style>
-			body {
-				background-color: #B8B8B8;
-			}			
-			table, th, td {
-				border: 3px solid black;
-				border-collapse: collapse;
-				width: 50%;
-				height: 30px;
-				text-align: center;
-				vertical-align: center;
-				padding: 7px;
-				background-color:#D9D9D9;
-				margin: auto;
-			}
-		</style>
-	</head>
-	<body>
-		<?php
-		include ("conectbd.php");
+
+<?php session_start(); 
+	include ("conectbd.php");
 		$link=Conectar();
 		$result=mysqli_query($link, "select * from Usuario");
-		?>
-		
-		<table border=1 cellspacing=1 cellpadding=1>
+	
+?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+<?php include('includes/metaAndCSS.html'); ?>
+	<title>Usuarios de Quiz</title>
+	</head>
+  <body>
+  <div id='page-wrap'>
+	
+  	<?php include('includes/header.php'); ?>
+	<?php include('includes/navigationMenu.php'); ?>
+
+    <section class="main" id="s1">
+
+	<div>
+	<table id="tablaUsuarios">
 			<tr>
 				<td>Nombre y Apellidos</td>
 				<td>Email</td>
@@ -63,8 +59,10 @@
 			mysqli_close($link);
 			?>
 		</table>
-		<br/>		
-		<a id="index" href="layout.php">Inicio</a>
-	</body>
+	</div>
+    </section>
+	<?php include('includes/footer.html'); ?>
+</div>
+</body>
 </html>
-				
+	
