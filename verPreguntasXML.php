@@ -22,8 +22,8 @@
 			<th>Enunciado</th><th>Complejidad</th><th>Temática</th>
 			</tr>	
 		<?php
-include ("conectbd.php");
-include ("funciones.php");
+include_once ("conectbd.php");
+include_once ("funciones.php");
 $link=Conectar();
 session_start();
 $xml = simplexml_load_file("XML/preguntas.xml");

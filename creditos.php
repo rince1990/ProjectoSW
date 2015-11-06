@@ -15,7 +15,7 @@
     <section class="main" id="s1">
 
 	<div>
-	<h1>Adrián González </h1><br/>
+	<h1>Adrián González y Marta Garcia </h1><br/>
 	<p class="titles">• Especialidad:</p> Ingeniería de Software <br/>
 	<p class="titles">• Aficiones:</p> Me gusta dejar el diseño de las páginas para el final.<br/> 
 	<p class="titles">• Foto :</p> <img id="foto" src="https://pbs.twimg.com/profile_images/1153561157/senorx_400x400.jpg" alt="foto de Señor X" > <br/>

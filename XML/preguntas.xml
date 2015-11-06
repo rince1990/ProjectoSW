@@ -22,4 +22,52 @@
 			</value>
     </correctResponse>
   </assessmentItem>
+  <assessmentItem complexity="sin complejidad" subject="">
+    <itemBody>
+      <p>kdlgfabdsjk</p>
+    </itemBody>
+    <correctResponse>
+      <value>dskjfbs</value>
+    </correctResponse>
+  </assessmentItem>
+  <assessmentItem complexity="sin complejidad" subject="">
+    <itemBody>
+      <p/>
+    </itemBody>
+    <correctResponse>
+      <value>rgadfgd</value>
+    </correctResponse>
+  </assessmentItem>
+  <assessmentItem complexity="sin complejidad" subject="">
+    <itemBody>
+      <p>dsgs</p>
+    </itemBody>
+    <correctResponse>
+      <value>dsafasd</value>
+    </correctResponse>
+  </assessmentItem>
+  <assessmentItem complexity="2" subject="">
+    <itemBody>
+      <p>ESta es jkasbfdao</p>
+    </itemBody>
+    <correctResponse>
+      <value>eosibfesoubr</value>
+    </correctResponse>
+  </assessmentItem>
+  <assessmentItem complexity="sin complejidad" subject="">
+    <itemBody>
+      <p>aserej</p>
+    </itemBody>
+    <correctResponse>
+      <value>ja deje</value>
+    </correctResponse>
+  </assessmentItem>
+  <assessmentItem complexity="sin complejidad" subject="">
+    <itemBody>
+      <p>lkdfgn</p>
+    </itemBody>
+    <correctResponse>
+      <value>klsfnlds</value>
+    </correctResponse>
+  </assessmentItem>
 </assessmentItems>

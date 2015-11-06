@@ -47,4 +47,14 @@ function getIP()
 }
 
 
+
+function comprobarLogueado()
+{
+	if (isset($_SESSION['useremail'])) return true;
+	else return false;
+
+}
+
+
+
 ?>

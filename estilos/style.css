@@ -5,6 +5,9 @@ body						{font: 16px Georgia, serif;}
 #page-wrap				{margin: 2% auto; color: white;}
 #page-wrap >.main 		{border: 1px solid #999; padding: 1%;
 						 margin-bottom: 1px; color: black;}
+						 
+.botonesgestion				{ width: 15%;  height: 15%; font-size:16px;}
+
 
 section > div				{padding: 20px;}
 header, nav, section		{background: #eee; text-align: center;}
@@ -14,3 +17,18 @@ nav span             				{ margin: 0px 10px 0px 0px;
 						display: inline-block;}
 
 #ErrorMsgs          		 { color: #f61; font-size: smaler}
+
+#select {
+    width:30%;
+    height:30%;
+    vertical-align:top;
+	font-size:16px;
+}
+#listaPreguntas {margin-bottom:3%;}
+
+#passwordTD{
+	background-color:red;
+	width: 30px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;}

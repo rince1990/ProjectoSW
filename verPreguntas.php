@@ -7,8 +7,8 @@
 
 <?php
 session_start();
-include ("conectbd.php");
-include ("funciones.php");
+include_once ("conectbd.php");
+include_once ("funciones.php");
 $link=Conectar();
 
 
