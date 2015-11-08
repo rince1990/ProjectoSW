@@ -5,7 +5,7 @@ if (comprobarLogueado()){ //MENU DE LOGUEADO ?>
 	
 	<nav class='main' id='n1' role='navigation'>
 		<span><a href='layout.php'>Inicio</a></spam>
-		<span><a href='GestionPreguntas.php'>Gestion Preguntas</a></spam>
+		<span><a href='GestionPreguntasJQuery.php'>Gestion Preguntas</a></spam>
 	</nav>
 	
 	

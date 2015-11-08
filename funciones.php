@@ -63,7 +63,7 @@ function usuarioEstaOnline(){
 	$link = Conectar();
 	//actualizamos la tabla
     //borrando los registros de las ip inactivas (24 minutos)
-    $limite = $ahora-1*60;
+    $limite = $ahora-24*60;
     $sql = "delete from conexiones_online where fecha < ".$limite;
 	$link->query($sql);
 	
