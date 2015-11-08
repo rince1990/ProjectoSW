@@ -1,8 +1,8 @@
 
 <?php
 session_start();
-include ("conectbd.php");
-
+include_once ("conectbd.php");
+include_once 'funciones.php';
 
 
 if
@@ -33,11 +33,6 @@ function verificarLogin($user,$pass)
                 alert("Usuario o Contrasenia Incorrecta.");
                 window.location="login.php"
                 </script>';
-
-		//      printf("Usuario registrado correctamente</br>");
-		//printf("Seras redirigido a la pagina de usuarios en 10 segundos, o puedes hacer click <a href='VerUsuarios.php'>aqui</a><br/> ");
-		//header( "refresh:10;url=VerUsuarios.php" );
-		//die();
 	}
 
 	//En otro caso
@@ -50,7 +45,7 @@ function verificarLogin($user,$pass)
 		$_SESSION["codSesion"] = guardarConexion($reg['email']);
 		$_SESSION["useremail"] = $reg['email'];
 		$_SESSION["username"] = $reg['nomApellidos'];
-
+		usuarioEstaOnline();
 		header("location:layout.php");
 		$link->close();
 		die();

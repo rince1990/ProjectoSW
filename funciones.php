@@ -1,5 +1,5 @@
 <?php
-
+include_once ("conectbd.php");
 const VERPREGUNTAS= "ver pregunta";
 const INSERTAR = "insertar pregunta";
 
@@ -7,8 +7,10 @@ function guardarAccion($email,$accion)
 {
 
 	if
-	(isset($_SESSION["codSesion"]))
+	(isset($_SESSION["codSesion"])){
 		$cod = $_SESSION["codSesion"];
+		usuarioEstaOnline();
+		}
 	else
 	{
 		$cod=NULL;
@@ -55,6 +57,40 @@ function comprobarLogueado()
 
 }
 
+function usuarioEstaOnline(){
+	$email = $_SESSION['useremail'];
+	$ahora = time();
+	$link = Conectar();
+	//actualizamos la tabla
+    //borrando los registros de las ip inactivas (24 minutos)
+    $limite = $ahora-1*60;
+    $sql = "delete from conexiones_online where fecha < ".$limite;
+	$link->query($sql);
+	
+	//miramos si el ip del visitante existe en nuestra tabla
+	$sql = "select email, fecha from conexiones_online where email = '$email'";
+	$result = $link->query($sql);
+	
+   //si existe actualizamos el campo fecha
+   if (mysqli_num_rows($result) != 0) $sql = "update conexiones_online set fecha = ".$ahora." where email = '$email'";
+   //si no existe insertamos el registro correspondiente a la nueva sesion
+   else $sql = "insert into conexiones_online (email, fecha) values ('$email', $ahora)";
+
+   //ejecutamos la sentencia sql
+   $link->query($sql);	
+	
+	$link->close();
+	
+}
+
+function usuarioEstaOffline(){
+	$email = $_SESSION['useremail'];
+	$link = Conectar();
+	$sql = "delete from conexiones_online where email ='$email'";
+	$link->query($sql);
+
+	
+}
 
 
 ?>

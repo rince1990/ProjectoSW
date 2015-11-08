@@ -13,6 +13,8 @@ if
 	$subject = mysqli_real_escape_string($link, $_POST['subject']);
 	insertarEnBD($link,$question,$answer,$complejidad);
 	insertarEnXML($question,$answer,$complejidad,$subject);
+	usuarioEstaOnline();
+
 }
 
 

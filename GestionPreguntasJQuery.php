@@ -59,7 +59,7 @@ include ("conectbd.php");
 				<div id="listaPreguntas"></div>
 				<div id="mostrarPregunta"></div>
 			</div>
-			
+
 		<?php
 }
 
@@ -72,95 +72,109 @@ include ("conectbd.php");
 </div>
 </body>
 </html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
+
 <script>
 
 	//MOSTRAR CANTIDAD DE PREGUNTAS CADA 5 SEG
-	
-	cuantasPreguntasAJAX();	
+	$( window ).load(function() {
+    cuantasPreguntasAJAX();
 	setInterval(cuantasPreguntasAJAX,5000);
-	
+	});
+
 	function cuantasPreguntasAJAX() {
-		//document.getElementById("cuantaspreguntas").style.visibility='visible';
-		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("POST","AJAX/cuentaPreguntas.php", true);
-		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xmlhttp.send();
 
-	xmlhttp.onreadystatechange=function(){
-	if (xmlhttp.readyState==4 && xmlhttp.status==200){
-		document.getElementById("cuantaspreguntas").innerHTML=xmlhttp.responseText ;
-		 }
+$.ajax({
+url: 'AJAX/cuentaPreguntas.php',
+type: "POST",
+beforeSend:function(){$('#cuantaspreguntas').html('<div><img src="images/loading.gif"/></div>')},
+success:function(datos){
+$('#cuantaspreguntas').fadeIn(1000).html(datos);},
+error:function(){
+$('#cuantaspreguntas').fadeIn().html('<p class="error"><strong>El servidor parece que no responde</p>');
+}
+});
+
 	}
 
-	}
-	
 
 	//HACE VISIBLE Y RELLENA EL DIV QUE CONTIENE LAS PREGUNTAS
 	function mostrarPreguntasAJAX(){
-		document.getElementById("mensaje").style.visibility='hidden';
-		document.getElementById("divseleccion").style.visibility='visible';
-		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("POST","AJAX/selectPreguntas.php", true);
-		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xmlhttp.send();
 
-	xmlhttp.onreadystatechange=function(){
-	if (xmlhttp.readyState==4 && xmlhttp.status==200){
-		document.getElementById("listaPreguntas").innerHTML=xmlhttp.responseText ;
-		 }
-	}
+		$("#mensaje").css("visibility", "hidden");
+		$("#divseleccion").css("visibility", "visible");
+
+		$.ajax({
+url: 'AJAX/selectPreguntas.php',
+type: "POST",
+beforeSend:function(){$('#listaPreguntas').html('<div><img src="images/loading.gif"/></div>')},
+success:function(datos){
+$('#listaPreguntas').fadeIn(1000).html(datos);},
+error:function(){
+$('#listaPreguntas').fadeIn().html('<p class="error"><strong>El servidor parece que no responde</p>');
+}
+});
+
 
 	}
 
 	//CAMBIA LA PREGUNTA VISUALIZADA EN EL HTML
 	function cambiarPreguntaAJAX(){
-	cod = document.getElementById("select").value;
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST","AJAX/datosPregunta.php", true);
-	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlhttp.send("cod="+cod);
 
-	xmlhttp.onreadystatechange=function(){
-	if (xmlhttp.readyState==4 && xmlhttp.status==200){
-		document.getElementById("mostrarPregunta").innerHTML=xmlhttp.responseText ;
-		 }
-	}
+	cod = $("#select").val();
+
+	$.ajax({
+url: 'AJAX/datosPregunta.php',
+type: "POST",
+data: "cod="+cod,
+beforeSend:function(){$('#mostrarPregunta').html('<div><img src="images/loading.gif"/></div>')},
+success:function(datos){
+$('#mostrarPregunta').fadeIn(1000).html(datos);},
+error:function(){
+$('#mostrarPregunta').fadeIn().html('<p class="error"><strong>El servidor parece que no responde</p>');
+}
+});
+
 }
 
 
 //GUARDA LA PREGUNTA EN LA BBDD Y XML
 function guardarPreguntaAJAX(){
 
+	$("#mensaje").css("visibility", "visible");
+	$("#divseleccion").css("visibility", "hidden");
 
-	document.getElementById("mensaje").style.visibility='visible';
-	document.getElementById("divseleccion").style.visibility='hidden';
+	var question = $("#question").val();
+	var answer = $("#answer").val();
+	var subject = $("#subject").val();
+	var complejidad = $().val("#complejidad");
+
+
 
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST","AJAX/insertarPreguntaAJAX.php", true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	var question = document.getElementById("question").value;
-	var answer = document.getElementById("answer").value;
-	var subject = document.getElementById("subject").value;
+
 	if ((question == '') || (answer == '') || (subject == '')){
 		alert ("Ni la pregunta ni la respuesta ni el subject pueden estar vacios");
  	}
  	else{
-	 		var complejidad = document.getElementById("complejidad").value;
-	 		var header = "question="+question+"&answer="+answer+"&subject="+subject+"&complejidad="+complejidad;
-	 		xmlhttp.send(header);
+	 	var header = "question="+question+"&answer="+answer+"&subject="+subject+"&complejidad="+complejidad;
+
+	 		$.ajax({
+url: 'AJAX/datosPregunta.php',
+type: "POST",
+data: header,
+beforeSend:function(){$('#mostrarPregunta').html('<div><img src="images/loading.gif"/></div>')},
+success:function(datos){
+$('#mensaje').html('<p class="error"><strong>Pregunta insertada correctamente</p>');},
+error:function(){
+$('#mensaje').fadeIn().html('<p class="error"><strong>La pregunta no ha podido insertarse</p>');
+}
+});
+
 
  	}
- 		
-	xmlhttp.onreadystatechange = function(){
-
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-			document.getElementById("mensaje").innerHTML= "Pregunta insertada correctamente";
-			console.log(xmlhttp.responsetxt);
-		}else{
-			document.getElementById("mensaje").innerHTML= "La pregunta no ha podido insertarse";
-			console.log(xmlhttp.responseText);
-		}
-	}
 
 }
 

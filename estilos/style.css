@@ -32,3 +32,8 @@ nav span             				{ margin: 0px 10px 0px 0px;
 	white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;}
+	
+#cuantaspreguntas {
+	margin-bottom:2%;
+	border: 1px solid #999;
+	}

@@ -9,7 +9,6 @@ $result = $link->query("select cod,pregunta,respuesta,complejidad from Preguntas
 $result = mysqli_fetch_assoc($result);
 guardarAccion($_SESSION['useremail'],VERPREGUNTAS);
 
-
 echo '<fieldset>';
 
 echo "<strong>Pregunta:</strong>".$result['pregunta']."<br/>";

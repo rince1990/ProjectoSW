@@ -1,7 +1,8 @@
 <?php
+	include_once 'funciones.php';
+	
 function Conectar()
 {
-
 
 	/* Conectando, seleccionando la base de datos
 	$con = mysql_connect('localhost', 'root', 'mysql') or die('No se pudo conectar: ' . mysql_error());
