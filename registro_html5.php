@@ -99,6 +99,42 @@
     alert(sAux);
     }
 
+	function comprobarLDAP(){
+				
+$.ajax({
+url: 'AJAX/comprobarLDAP.php',
+type: "POST",
+cache : false,
+data: "email="+$('#email').val(),
+beforeSend:function(){$('#emailLDAP').html('<img src="images/loading.gif"/>')},
+success:function(datos){
+	if(datos=='SI') $('#emailLDAP').html("<img src='images/Green_check.png'/>");
+	else $('#emailLDAP').html("<img src='images/Red_check.png'/>");
+},
+error:function(){
+$('#emailLDAP').html('<p class="error"><strong>El servidor parece que no responde</p>');
+}
+});
+
+	}
+	
+	function comprobarPassSOAP(){
+		$.ajax({
+url: 'AJAX/ComprobarTopPasswords.php',
+type: "POST",
+cache : false,
+data: "pass="+$('#passw1').val(),
+beforeSend:function(){$('#topPass').html('<img src="images/loading.gif"/>')},
+success:function(datos){
+		if(datos=='VALIDA') $('#topPass').html("<img src='images/Green_check.png'/>");
+	else $('#topPass').html("<img src='images/Red_check.png'/>");
+	
+},
+error:function(){
+$('#topPass').html('<p class="error"><strong>El servidor parece que no responde</p>');
+}
+});
+	}
 
 
     </script>
@@ -117,11 +153,11 @@
             Nombre y apellidos(*):<br>
             <input type="text" name="name" id="name" placeholder="Juan Perez Corta" pattern="([A-Z][a-z]*\s){2,3}[A-Z][a-z]*" required=""><br>
             Dirección de correo(*):<br>
-            <input type="email" name="email" id="email" placeholder="jvadillo001@ikasle.ehu.es"  required="" pattern="^[A-Za-z]+[0-9]{3}@ikasle.ehu.(eus|es)$"><br>
+            <input type="email" name="email" id="email" placeholder="jvadillo001@ikasle.ehu.es"  required="" pattern="^[A-Za-z]+[0-9]{3}@ikasle.ehu.(eus|es)$" onblur="comprobarLDAP()"><div id="emailLDAP"></div><br>
             Password:<br>
-            <input type="password" name="passw1" id="passw1" pattern="^[\w]{6,20}$" required=""><br>
+            <input type="password" name="passw1" id="passw1" pattern="^[\w]{6,20}$" required="" onblur="comprobarPassSOAP()"><div id="topPass"></div><br>
             Repite password:<br>
-            <input type="password" name="passw2" id="passw2" pattern="^[\w]{6,20}$" oninput="matchPassword(this)" required=""><br>
+            <input type="password" name="passw2" id="passw2" pattern="^[\w]{6,20}$" oninput="matchPassword(this)" required="" ><br>
             Número de teléfono:<br>
             <input type="tel" name="phone" id="phone" pattern="^[0-9]{9}$" placeholder="943223344"><br>
             Especialidad(*):<br>
