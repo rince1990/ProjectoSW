@@ -37,3 +37,11 @@ nav span             				{ margin: 0px 10px 0px 0px;
 	margin-bottom:2%;
 	border: 1px solid #999;
 	}
+	
+	table,tr,td {
+	text-align:left;
+	}
+	
+.imgcheck , .imgcheck2 {
+	width: 5%;
+}

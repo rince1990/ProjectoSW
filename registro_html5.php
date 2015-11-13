@@ -9,6 +9,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
 
+	 //varialbes para dejar registrarse comprobando con ajax email y pass
+	 var emailComprobado;
+	 var passComprobado;
+	 $( window ).load(function() {
+	 	 emailComprobado = false;
+	 	 passComprobado = false;
+	});
+
     //Funcion para añadir/quitar textbox que permita escoger otra especialidad
     function addOthers(){
     var selectChoice=document.getElementById('especialidad');
@@ -100,40 +108,66 @@
     }
 
 	function comprobarLDAP(){
-				
+
 $.ajax({
 url: 'AJAX/comprobarLDAP.php',
 type: "POST",
 cache : false,
 data: "email="+$('#email').val(),
-beforeSend:function(){$('#emailLDAP').html('<img src="images/loading.gif"/>')},
+beforeSend:function(){$('#email').after('<img class="imgcheck" src="images/loading.gif"/>')},
 success:function(datos){
-	if(datos=='SI') $('#emailLDAP').html("<img src='images/Green_check.png'/>");
-	else $('#emailLDAP').html("<img src='images/Red_check.png'/>");
+	$(".imgcheck").remove();
+	if(datos=='SI'){
+		 $('#email').after("<img class='imgcheck' src='images/Green_check.png'/>");
+		 emailComprobado = true;
+		 }
+	else {
+		$('#email').after("<img class='imgcheck' src='images/Red_check.png'/>");
+		emailComprobado = false;
+		}
 },
 error:function(){
-$('#emailLDAP').html('<p class="error"><strong>El servidor parece que no responde</p>');
+		$(".imgcheck").remove();
+$('#email').aAfter('<p class="imgcheck" class="error"><strong>El servidor parece que no responde</p>');
+		 emailComprobado = false;
+
 }
 });
 
 	}
-	
+
 	function comprobarPassSOAP(){
 		$.ajax({
 url: 'AJAX/ComprobarTopPasswords.php',
 type: "POST",
 cache : false,
 data: "pass="+$('#passw1').val(),
-beforeSend:function(){$('#topPass').html('<img src="images/loading.gif"/>')},
+beforeSend:function(){$('#passw1').after('<img class="imgcheck2" src="images/loading.gif"/>')},
 success:function(datos){
-		if(datos=='VALIDA') $('#topPass').html("<img src='images/Green_check.png'/>");
-	else $('#topPass').html("<img src='images/Red_check.png'/>");
-	
+	$(".imgcheck2").remove();
+		if(datos=='VALIDA'){
+			 $('#passw1').after("<img class='imgcheck2' src='images/Green_check.png'/>");
+			 passComprobado = true;
+			 }
+	else{
+		 $('#passw1').after("<img class='imgcheck2' src='images/Red_check.png'/>");
+		 passComprobado = false;;
+	}
 },
 error:function(){
-$('#topPass').html('<p class="error"><strong>El servidor parece que no responde</p>');
+	$(".imgcheck2").remove();
+$('#passw1').after('<p  class="imgcheck2" class="error"><strong>El servidor parece que no responde</p>');
+passComprobado = false;
 }
 });
+	}
+
+	function validacionSoap(){
+		if (emailComprobado && passComprobado) return true;
+		else {
+			alert("los campos email y/o password no han sido validados");
+			return false;
+			}
 	}
 
 
@@ -142,43 +176,94 @@ $('#topPass').html('<p class="error"><strong>El servidor parece que no responde<
 </head>
 
  <div id='page-wrap'>
-	
+
   	<?php include('includes/header.php'); ?>
 	<?php include('includes/navigationMenu.php'); ?>
 
     <section class="main" id="s1">
 
 	<div>
-	<form id='registro' action='registrar.php' method="post" enctype="multipart/form-data">
-            Nombre y apellidos(*):<br>
-            <input type="text" name="name" id="name" placeholder="Juan Perez Corta" pattern="([A-Z][a-z]*\s){2,3}[A-Z][a-z]*" required=""><br>
-            Dirección de correo(*):<br>
-            <input type="email" name="email" id="email" placeholder="jvadillo001@ikasle.ehu.es"  required="" pattern="^[A-Za-z]+[0-9]{3}@ikasle.ehu.(eus|es)$" onblur="comprobarLDAP()"><div id="emailLDAP"></div><br>
-            Password:<br>
-            <input type="password" name="passw1" id="passw1" pattern="^[\w]{6,20}$" required="" onblur="comprobarPassSOAP()"><div id="topPass"></div><br>
-            Repite password:<br>
-            <input type="password" name="passw2" id="passw2" pattern="^[\w]{6,20}$" oninput="matchPassword(this)" required="" ><br>
-            Número de teléfono:<br>
-            <input type="tel" name="phone" id="phone" pattern="^[0-9]{9}$" placeholder="943223344"><br>
-            Especialidad(*):<br>
-            <select id="especialidad" onchange="addOthers()" name="Especialidad" required="">
+	<form id='registro' action='registrar.php' method="post" enctype="multipart/form-data" onsubmit='return validacionSoap()'>
+	<table>
+		<tr>
+			<td>
+				Nombre y apellidos(*):
+			</td>
+			<td>
+				<input type="text" name="name" id="name" placeholder="Juan Perez Corta" pattern="([A-Z][a-z]*\s){2,3}[A-Z][a-z]*" required="">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Dirección de correo(*):
+			</td>
+			<td>
+				<input type="email" name="email" id="email" placeholder="jvadillo001@ikasle.ehu.es"  required="" pattern="^[A-Za-z]+[0-9]{3}@ikasle.ehu.(eus|es)$" onblur="comprobarLDAP()">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Password(*):
+			</td>
+			<td>
+				<input type="password" name="passw1" id="passw1" pattern="^[\w]{6,20}$" required="" onblur="comprobarPassSOAP()">
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Repite password:(*):
+			</td>
+			<td>
+				<input type="password" name="passw2" id="passw2" pattern="^[\w]{6,20}$" oninput="matchPassword(this)" required="" >
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Número de teléfono:
+			</td>
+			<td>
+				<input type="tel" name="phone" id="phone" pattern="^[0-9]{9}$" placeholder="943223344">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Especialidad(*):
+			</td>
+			<td>
+				<select id="especialidad" onchange="addOthers()" name="Especialidad" required="">
                 <option value="software">Ingeniería del Software </option>
                 <option value="hardware">Ingeniería de Computadores</option>
                 <option value="computacion">Computación</option>
                 <option value="otros">otros</option>
             </select>
 
-            <div id="other"></div><br>
-            Tecnologías y herramientas en las que está interesado:<br>
-            <textarea name="interested" rows="4" cols="50"></textarea><br>
-            <br>
-            Sube tu foto: <input type='file' id="upload" name="upload"><br>
-             <input name="Submit" type="submit" value="Submit">
-        </form>
+            <div id="other"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Tecnologías y herramientas en las que está interesado:
+			</td>
+			<td>
+				<textarea name="interested" rows="4" cols="50"></textarea><br>
+				<div id="other"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Sube tu foto:
+			</td>
+			<td>
+				 <input type='file' id="upload" name="upload"><br>
+			</td>
+		</tr>
+	</table>
+    <input name="Submit" type="submit" value="Submit">
+    </form>
 	</div>
     </section>
 	<?php include('includes/footer.html'); ?>
 </div>
 </body>
 </html>
-

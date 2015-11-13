@@ -25,7 +25,6 @@
 include_once ("conectbd.php");
 include_once ("funciones.php");
 $link=Conectar();
-session_start();
 $xml = simplexml_load_file("XML/preguntas.xml");
 
 guardarAccion($_SESSION['useremail'],VERPREGUNTAS);
