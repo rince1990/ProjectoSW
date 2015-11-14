@@ -13,17 +13,15 @@ $result2 = mysqli_fetch_assoc($result2);
 
 
  //calculamos el numero de sesiones
-   $sql = "select email from conexiones_online";
+   $sql = "select count(*) as totalOnline from conexiones_online";
    $result3 = $link->query($sql);
-   $usuarios = mysqli_num_rows($result3);
-   //liberamos memoria
-   mysqli_free_result($result3);
+   $result3 = mysqli_fetch_assoc($result3);
+
    
    
-echo "<strong>Numero de usuarios online :</strong>".$usuarios."</br>";
+echo "<strong>Numero de usuarios online :</strong>".$result3['totalOnline']."</br>";
 echo "<strong>Mis preguntas/Todas las preguntas: </strong>".$result['misPreguntas']."/".$result2['totalPreguntas']."<br/>";
 
-
-
+   
 
 ?>

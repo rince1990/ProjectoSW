@@ -114,7 +114,9 @@ url: 'AJAX/comprobarLDAP.php',
 type: "POST",
 cache : false,
 data: "email="+$('#email').val(),
-beforeSend:function(){$('#email').after('<img class="imgcheck" src="images/loading.gif"/>')},
+beforeSend:function(){
+	$(".imgcheck").remove();
+	$('#email').after('<img class="imgcheck" src="images/loading.gif"/>')},
 success:function(datos){
 	$(".imgcheck").remove();
 	if(datos=='SI'){
@@ -138,11 +140,13 @@ $('#email').aAfter('<p class="imgcheck" class="error"><strong>El servidor parece
 
 	function comprobarPassSOAP(){
 		$.ajax({
-url: 'AJAX/ComprobarTopPasswords.php',
+url: 'AJAX/comprobarTopPasswords.php',
 type: "POST",
 cache : false,
 data: "pass="+$('#passw1').val(),
-beforeSend:function(){$('#passw1').after('<img class="imgcheck2" src="images/loading.gif"/>')},
+beforeSend:function(){
+		$(".imgcheck2").remove();
+$('#passw1').after('<img class="imgcheck2" src="images/loading.gif"/>')},
 success:function(datos){
 	$(".imgcheck2").remove();
 		if(datos=='VALIDA'){
