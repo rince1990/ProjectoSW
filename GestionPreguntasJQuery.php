@@ -147,13 +147,13 @@ function guardarPreguntaAJAX(){
 	var question = $("#question").val();
 	var answer = $("#answer").val();
 	var subject = $("#subject").val();
-	var complejidad = $().val("#complejidad");
+	var complejidad = $("#complejidad").val();
 
 
 
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST","AJAX/insertarPreguntaAJAX.php", true);
-	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	//xmlhttp = new XMLHttpRequest();
+	//xmlhttp.open("POST","AJAX/insertarPreguntaAJAX.php", true);
+	//xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 	if ((question == '') || (answer == '') || (subject == '')){
 		alert ("Ni la pregunta ni la respuesta ni el subject pueden estar vacios");
@@ -161,11 +161,11 @@ function guardarPreguntaAJAX(){
  	else{
 	 	var header = "question="+question+"&answer="+answer+"&subject="+subject+"&complejidad="+complejidad;
 
-	 		$.ajax({
-url: 'AJAX/datosPregunta.php',
+$.ajax({
+url: 'AJAX/insertarPreguntaAJAX.php',
 type: "POST",
 data: header,
-beforeSend:function(){$('#mostrarPregunta').html('<div><img src="images/loading.gif"/></div>')},
+beforeSend:function(){$('#mensaje').html('<div><img src="images/loading.gif"/></div>')},
 success:function(datos){
 $('#mensaje').html('<p class="error"><strong>Pregunta insertada correctamente</p>');},
 error:function(){

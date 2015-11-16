@@ -12,9 +12,13 @@
 	 //varialbes para dejar registrarse comprobando con ajax email y pass
 	 var emailComprobado;
 	 var passComprobado;
+	 var ticket;
+	 var codigo;
 	 $( window ).load(function() {
 	 	 emailComprobado = false;
 	 	 passComprobado = false;
+		 passComprobado = false;
+		 codigo='1234';
 	});
 
     //Funcion para añadir/quitar textbox que permita escoger otra especialidad
@@ -137,41 +141,59 @@ $('#email').aAfter('<p class="imgcheck" class="error"><strong>El servidor parece
 });
 
 	}
+	
 
 	function comprobarPassSOAP(){
-		$.ajax({
-url: 'AJAX/comprobarTopPasswords.php',
-type: "POST",
-cache : false,
-data: "pass="+$('#passw1').val(),
-beforeSend:function(){
+	var pass=$('#passw1').val();
+	var sendingData={"pass" : pass, "codigo": codigo};
+	$.ajax({
+		url: 'AJAX/comprobarTopPasswords.php',
+		type: "POST",
+		cache : false,
+		data : sendingData,
+		beforeSend:function(){
 		$(".imgcheck2").remove();
-$('#passw1').after('<img class="imgcheck2" src="images/loading.gif"/>')},
-success:function(datos){
-	$(".imgcheck2").remove();
-		if(datos=='VALIDA'){
-			 $('#passw1').after("<img class='imgcheck2' src='images/Green_check.png'/>");
-			 passComprobado = true;
-			 }
-	else{
-		 $('#passw1').after("<img class='imgcheck2' src='images/Red_check.png'/>");
-		 passComprobado = false;;
-	}
-},
-error:function(){
-	$(".imgcheck2").remove();
-$('#passw1').after('<p  class="imgcheck2" class="error"><strong>El servidor parece que no responde</p>');
-passComprobado = false;
-}
-});
+		$('#passw1').after('<img class="imgcheck2" src="images/loading.gif"/>')},
+		success:function(datos){
+			$(".imgcheck2").remove();
+				if(datos=='NO_AUTORIZADO') {
+				ticket = false;
+				}
+				else{
+					if(datos=='VALIDA'){
+						$('#passw1').after("<img class='imgcheck2' src='images/Green_check.png'/>");
+						passComprobado = true;
+						ticket = true;
+						}
+					else{
+						$('#passw1').after("<img class='imgcheck2' src='images/Red_check.png'/>");
+						passComprobado = false;
+						ticket = true;
+					}
+				}
+			},
+		error:function(){
+			$(".imgcheck2").remove();
+			$('#passw1').after('<p  class="imgcheck2" class="error"><strong>El servidor parece que no responde</p>');
+			passComprobado = false;
+			ticket = false;
+		}
+		});
 	}
 
 	function validacionSoap(){
-		if (emailComprobado && passComprobado) return true;
-		else {
-			alert("los campos email y/o password no han sido validados");
+	
+		if (ticket) {
+			if (emailComprobado && passComprobado) return true;
+			else {
+				alert("los campos email y/o password no han sido validados");
+				return false;
+				}
+		}
+		else{
+			alert("USUARIO NO AUTORIZADO");
 			return false;
-			}
+		}	
 	}
 
 

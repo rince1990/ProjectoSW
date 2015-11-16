@@ -11,27 +11,29 @@ $server->configureWSDL('comprobarContrasenia',$ns);
 $server->wsdl->schemaTargetNamespace=$ns;
 //registramos la función que vamos a implementar
 //se podría registrar mas de una función …
-$server->register('comprobarContrasenia',array('pass'=>'xsd:string'),array('response'=>'xsd:string'),$ns);
+$server->register('comprobarContrasenia',array('pass'=>'xsd:string','codigo'=>'xsd:string'),array('response'=>'xsd:string'),$ns);
 
-
-function comprobarContrasenia($pass)
+function comprobarContrasenia($pass, $codigo)
 {
-
-	$lineas = file('toppasswords.txt', FILE_IGNORE_NEW_LINES);
-	$respuesta = "VALIDA";
-	//Output a line of the file until the end is reached
-	foreach ($lineas as $num_linea => $linea) {
-		//$respuesta = $respuesta.$linea;
-		if($linea == $pass){
-			$respuesta = "INVALIDA";
+	$lineas = file('ticket.txt', FILE_IGNORE_NEW_LINES);
+	$lineasPass= file('toppasswords.txt', FILE_IGNORE_NEW_LINES);
+	$respuesta = "NO_AUTORIZADO";
+		//Output a line of the file until the end is reached
+		foreach ($lineas as $num_linea => $linea){
+			//$respuesta = $respuesta.$linea;
+			if($linea == $codigo){
+				$respuesta = "VALIDA";
+				//Output a line of the file until the end is reached
+				foreach ($lineasPass as $num_lineaPass => $lineaPass){
+					//$respuesta = $respuesta.$linea;
+					if($lineaPass == $pass){
+						$respuesta = "INVALIDA";
+					}
+				}
+			}
 		}
-	}
-	
 	return $respuesta;
-	
 }
-
-
 
 //llamamos al método service de la clase nusoap
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ?
