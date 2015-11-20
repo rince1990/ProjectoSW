@@ -5,7 +5,7 @@ include_once('../nusoap-0.9.5/lib/class.wsdlcache.php');
 //creamos el objeto de tipo soapclient.
 //http://www.mydomain.com/server.php se refiere a la url
 //donde se encuentra el servicio SOAP que vamos a utilizar.
-$soapclient = new nusoap_client( 'http://localhost/ProjectoSW/servicioSOAP/ComprobarContraseniaSOAP.php?wsdl',false);
+$soapclient = new nusoap_client( 'http://swadriang.esy.es/ProjectoSW/servicioSOAP/ComprobarContraseniaSOAP.php?wsdl',false);
 //Llamamos la función que habíamos implementado en el Web Service
 //e imprimimos lo que nos devuelve
 

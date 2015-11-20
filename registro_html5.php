@@ -205,9 +205,14 @@ $('#email').aAfter('<p class="imgcheck" class="error"><strong>El servidor parece
 
   	<?php include('includes/header.php'); ?>
 	<?php include('includes/navigationMenu.php'); ?>
-
+	
+	
     <section class="main" id="s1">
-
+	
+	<?php if (!comprobarLogueado()){ 
+	?>
+		
+	
 	<div>
 	<form id='registro' action='registrar.php' method="post" enctype="multipart/form-data" onsubmit='return validacionSoap()'>
 	<table>
@@ -288,6 +293,12 @@ $('#email').aAfter('<p class="imgcheck" class="error"><strong>El servidor parece
     <input name="Submit" type="submit" value="Submit">
     </form>
 	</div>
+<?php } else{
+			echo 'Ya estas logueado '.$_SESSION['username'].', no hace falta que te registres de nuevo';
+		
+}
+	 ?>
+	
     </section>
 	<?php include('includes/footer.html'); ?>
 </div>

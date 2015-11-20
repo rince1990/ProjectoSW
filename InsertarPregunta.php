@@ -97,12 +97,11 @@ function insertarEnBD($link,$question,$answer,$complejidad)
 	
   	<?php include('includes/header.php'); ?>
 	<?php include('includes/navigationMenu.php'); ?>
+	<?php include('includes/seguridadAlumno.php'); ?>
 
     <section class="main" id="s1">
 
 	<div>
-	<?php if (comprobarLogueado())
-	{?>
 		<form id='pregunta' method="post" action='insertarPregunta.php'>
 			Pregunta:(*):<br/>
 			<textarea name="question" rows="4" cols="50" placeholder="Inserta la pregunta..." required></textarea><br/><br/>
@@ -122,9 +121,6 @@ function insertarEnBD($link,$question,$answer,$complejidad)
 			<br/><br/>
 			<input type="submit" name="submit" value="Enviar"><br>
 		</form>
-		<?php }
-else echo "Debes estar logueado para acceder a este contenido.";
-?>
 		<br/>
 		<a href="layout.php">Atras</a>
 	</div>

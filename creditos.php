@@ -15,30 +15,27 @@ include_once 'includes/BrowserDetection.php';
 <script>
 
 	function mostrarMapa(ip,cliente_servidor){
-		//test
-		//ip= '158.227.0.240';
 
 		URL ='http://freegeoip.net/json/'+ip;
 
-		$.ajax({
-url: URL,
-beforeSend:function(){
+$.ajax({
+	url: URL,
+	beforeSend:function(){
 	$('#map').html('<div><img src="images/loading.gif"/>Espere un momento, puede tardar unos segundos...</div>')},
-success:function(datos){
-	initMap(datos.latitude, datos.longitude);
-	initData(datos);
+	success:function(datos){
+		initMap(datos.latitude, datos.longitude);
+		initData(datos);
 	},
-error:function(){
-	$('#map').html('<p class="error"><strong>El servidor parece que no responde</p>');
-}
+	error:function(){
+		$('#map').html('<p class="error"><strong>El servidor parece que no responde</p>');
+	}
 });
 
 
 function initMap(lat,lon) {
   $("#map").css("width", "800px");
-   $("#map").css("height", "300px");
-    $("#map").css("margin", "auto");
-
+  $("#map").css("height", "300px");
+  $("#map").css("margin", "auto");
   $('#map').html("Loading Map...");
   
   var map;
@@ -56,16 +53,17 @@ function initMap(lat,lon) {
     title: 'Here!'
   });
 
-  
 }
 
 function initData(datos){
+	//mostramos los datos recibidos del JSON
 	$('#datos').html("<br/><strong>IP</strong>: "+datos.ip);
 	if(datos.country_name.length != 0)$('#datos').append("<br/><br/> <strong>Pais</strong> : "+datos.country_name);
 	if(datos.region_name.length != 0)$('#datos').append("<br/> <strong>Region</strong> : "+datos.region_name);
 	if(datos.city.length != 0)$('#datos').append("<br/> <strong>Ciudad</strong> : "+datos.city);
 	if(datos.zip_code.length != 0)$('#datos').append("<br/><strong>Cod Postal</strong> : "+datos.zip_code);
-	if(cliente_servidor == 'cliente'){
+	
+	if(cliente_servidor == 'cliente'){//mostramos más datos del cliente
 		<?php $browser = new BrowserDetection(); ?>
 		$('#datos').append("<br/><br/> <strong>Navegador</strong> : "+"<?php echo $browser->getBrowser() ?>");
 		$('#datos').append("<br/> <strong>Version</strong> : "+"<?php echo $browser->getVersion() ?>");
@@ -73,7 +71,9 @@ function initData(datos){
 		
 	}
 	
+	
 	$('#datos').append("<br/><br/> <strong>Geolocalización</strong> : ");
+	//Aqui debajo ira el mapa
 }
 
 }

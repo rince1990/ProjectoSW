@@ -4,10 +4,10 @@ include_once ("../conectbd.php");
 $link=Conectar();
 
 
-$result = $link->query("select cod,pregunta from Preguntas where email='".$_SESSION['useremail']."'");
+$result = $link->query("select cod,pregunta from Preguntas");
 
 //GENERA UN SELECT CON TODAS LAS PREGUNTAS DEL USUARIO
-echo 'Mis preguntas:<br/>';
+echo 'Preguntas:<br/>';
 echo '<select id="select" onChange="cambiarPreguntaAJAX()">';
 while ($row = mysqli_fetch_assoc($result))
 {
@@ -18,4 +18,3 @@ echo '</select>';
 
 
 ?>
-

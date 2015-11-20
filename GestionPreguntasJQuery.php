@@ -14,15 +14,12 @@ include ("conectbd.php");
 
   	<?php include('includes/header.php'); ?>
 	<?php include('includes/navigationMenu.php'); ?>
+	<?php include('includes/seguridadAlumno.php');?>
 
     <section class="main" id="s1">
 
 	<div>
-	<?php if (!comprobarLogueado())
-{
-	echo "Debes estar logueado para acceder a este contenido.";
-}else//MOSTRAMOS LA PAGINA
-	{?>
+
 	<div id="cuantaspreguntas"></div>
 	<input type="button" class="botonesgestion" name="insertar" value="Insertar" onclick="guardarPreguntaAJAX()"/>
 	<input type="button" class="botonesgestion" name="mostrarMisPreguntas" value="Ver mis preguntas" onclick="mostrarPreguntasAJAX()"/>
@@ -59,11 +56,6 @@ include ("conectbd.php");
 				<div id="listaPreguntas"></div>
 				<div id="mostrarPregunta"></div>
 			</div>
-
-		<?php
-}
-
-?>
 		<br/>
 		<a href="layout.php">Atras</a>
 	</div>

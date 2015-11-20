@@ -45,6 +45,7 @@ function verificarLogin($user,$pass)
 		$_SESSION["codSesion"] = guardarConexion($reg['email']);
 		$_SESSION["useremail"] = $reg['email'];
 		$_SESSION["username"] = $reg['nomApellidos'];
+		$_SESSION["rol"]= $reg['rol'];
 		usuarioEstaOnline();
 		header("location:layout.php");
 		$link->close();
@@ -95,8 +96,8 @@ function guardarConexion($email)
 (!comprobarLogueado())
 	{ ?>
 <form action="login.php" method="post" class="login">
-    <div>Username<input name="user" type="text" value="mgalletas001@ikasle.ehu.es"></div>
-    <div>Password<input name="pass" type="password" value="123456"></div>
+    <div>Username<input name="user" type="text" value="web000@ehu.es"></div>
+    <div>Password<input name="pass" type="password" value="web000"></div>
     <div><input name="login" type="submit" value="login"></div>
 </form>
 

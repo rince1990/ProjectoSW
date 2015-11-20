@@ -21,6 +21,7 @@ $link=Conectar();
 
   	<?php include('includes/header.php'); ?>
 	<?php include('includes/navigationMenu.php'); ?>
+	<?php include('includes/seguridadAlumno.php');?>
 
     <section class="main" id="s1">
 
