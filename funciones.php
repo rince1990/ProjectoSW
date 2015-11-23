@@ -92,5 +92,16 @@ function usuarioEstaOffline(){
 	
 }
 
+ 
+function enviarEmail( $email, $mensaje ){
+
+ 
+   $cabeceras = 'MIME-Version: 1.0' . "\r\n";
+   $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+   $cabeceras .= 'From: Quiz Game <QuizGame@swadriang.esy.es>' . "\r\n";
+   // Se envia el correo al usuario
+   mail($email, "Recuperar contraseña", $mensaje, $cabeceras);
+}
+
 
 ?>

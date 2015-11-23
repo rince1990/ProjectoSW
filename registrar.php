@@ -72,7 +72,7 @@ $link = Conectar();
 $name = mysqli_real_escape_string($link, $_POST['name']);
 $email = mysqli_real_escape_string($link, $_POST['email']);
 $password = mysqli_real_escape_string($link, $_POST['passw1']);
-$password_enc = md5($password);
+$password_enc = sha1(md5($password));
 $phone = mysqli_real_escape_string($link, $_POST['phone']);
 $especialidad = mysqli_real_escape_string($link, $_POST['Especialidad']);
 if ($especialidad == 'otros')

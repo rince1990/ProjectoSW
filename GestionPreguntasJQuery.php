@@ -80,11 +80,8 @@ $.ajax({
 url: 'AJAX/cuentaPreguntas.php',
 type: "POST",
 beforeSend:function(){$('#cuantaspreguntas').html('<div><img src="images/loading.gif"/></div>')},
-success:function(datos){
-$('#cuantaspreguntas').fadeIn(1000).html(datos);},
-error:function(){
-$('#cuantaspreguntas').fadeIn().html('<p class="error"><strong>El servidor parece que no responde</p>');
-}
+success:function(datos){$('#cuantaspreguntas').html(datos)},
+error:function(){$('#cuantaspreguntas').html('<p class="error"><strong>El servidor parece que no responde</p>')}
 });
 
 	}

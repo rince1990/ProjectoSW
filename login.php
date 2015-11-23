@@ -1,10 +1,69 @@
-
 <?php
 session_start();
 include_once ("conectbd.php");
 include_once 'funciones.php';
 
 
+	
+function generarLinkTemporal($email,$link){
+   // Se genera una cadena para validar el cambio de contraseña
+   $cadena = $email.rand(1,9999999).date('Y-m-d');
+   // Se cifra la cadena para que nadie mas tenga acceso a ella ni pueda averiguar como se ha formado
+   $token = sha1($cadena);
+ 
+
+   $result = $link->query("INSERT INTO tblreseteopass (email, token) VALUES('$email','$token')");
+   if($result){
+      // Se devuelve el link que se enviara al usuario
+      $enlace = $_SERVER["SERVER_NAME"].'/ProjectoSW/resetearPassForm.php?email='.sha1($email).'&token='.$token;
+      return $enlace;
+   }
+   else
+      return 'ERROR';
+}
+
+
+function generarMensaje($linktemporal){
+	
+	
+	 $mensaje = '<html>
+     <head>
+        <title>Restablece tu contraseña</title>
+     </head>
+     <body>
+       <p>Hemos detectado un numero elevado de intentos para entrar a tu cuenta, por ello hemos decido bloquearla temporalmente.</p>
+       <p>Para desbloquearla cambiar tu password actual por uno más nuevo.</p>
+       <p>
+         <strong>Enlace para cambiar tu contraseña</strong><br>
+         <a href="'.$linktemporal.'"> Cambiar contraseña </a>
+       </p>
+     </body>
+    </html>';
+
+	return $mensaje;
+	
+	
+}
+
+
+?>
+<!DOCTYPE html>
+<html>
+	<head>
+<?php include('includes/metaAndCSS.html'); ?>
+	<title>Login</title>
+	</head>
+  <body>
+  <div id='page-wrap'>
+
+  	<?php include('includes/header.php'); ?>
+	<?php include('includes/navigationMenu.php'); ?>
+
+    <section class="main" id="s1">
+
+	<div>
+		<p>
+		<?php
 if
 (isset($_POST['user']) && isset($_POST['pass']))
 {
@@ -17,7 +76,7 @@ function verificarLogin($user,$pass)
 
 	//El password obtenido se le aplica el crypt(md5)
 	//Posteriormente se compara en el query
-	$pass_c = md5($pass);
+	$pass_c = sha1(md5($pass));
 	$q = "select * from Usuario where email='$user' and password='$pass_c'";
 
 	//obtenemos el link de la BD y ejecutamos la consulta
@@ -25,14 +84,47 @@ function verificarLogin($user,$pass)
 	$result = $link->query($q);
 
 	//Si el resultado obtenido no tiene nada
-	//Muestra el error y redirige al index
-	if
-	( $result->num_rows == 0)
+	if ($result->num_rows == 0)
 	{
-		echo'<script type="text/javascript">
-                alert("Usuario o Contrasenia Incorrecta.");
-                window.location="login.php"
-                </script>';
+		$q = "select intentos, estado from Usuario where email='$user'";
+		$result = $link->query($q);
+		
+		if ( $result->num_rows != 0) {
+		
+			$res = mysqli_fetch_assoc($result);
+			
+			//si estado es bloqueado
+			//Muestra un error y redirige al index
+			if ($res['estado']=='bloqueado') 
+			echo 'El usuario esta bloqueado, se le ha enviado un email para restaurarlo';
+				
+			//Sino, se incrementa en uno el numero de intentos
+			else {
+				$intentos = $res['intentos'];
+				$intentos = $intentos +1;
+
+				//Si es el tercer intento fallido, se bloquea el usuario
+				//Muestra un error y redirige al index				
+				if($intentos==3) {
+					$q = "UPDATE Usuario SET intentos='$intentos', estado='bloqueado' where email='$user'";
+					$result = $link->query($q);
+					$linktemporal = generarLinkTemporal($user,$link);
+					enviarEmail($user, generarMensaje($linktemporal));
+					echo 'El usuario ha sido bloqueado, se le ha enviado un email para restaurarlo';
+
+				}
+				else {
+					$q = "UPDATE Usuario SET intentos='$intentos' where email='$user'";	
+					$result = $link->query($q);	
+					
+					echo'Usuario o Contrasenia Incorrecta';
+				}
+			}
+		}
+		else{
+			echo'Usuario o Contrasenia Incorrecta';
+
+		}
 	}
 
 	//En otro caso
@@ -41,17 +133,30 @@ function verificarLogin($user,$pass)
 	else
 	{
 		$reg = mysqli_fetch_assoc($result);
+		if($reg['estado']!='bloqueado') {
 		session_start();
 		$_SESSION["codSesion"] = guardarConexion($reg['email']);
 		$_SESSION["useremail"] = $reg['email'];
 		$_SESSION["username"] = $reg['nomApellidos'];
 		$_SESSION["rol"]= $reg['rol'];
+		
+		//Poner a cero el numero de intentos
+		$q = "UPDATE Usuario SET intentos='0' where email='$user'";	
+		$result = $link->query($q);
+		
 		usuarioEstaOnline();
 		header("location:layout.php");
 		$link->close();
 		die();
+		}
+		else
+		{
+			echo'<script type="text/javascript">
+                alert("El usuario esta bloqueado.");
+                window.location="layout.php"
+                </script>';
+		}
 	}
-
 }
 
 
@@ -72,27 +177,9 @@ function guardarConexion($email)
 	$link->close();
 	return $cod;
 
-}
-
-
-
-?>
-<!DOCTYPE html>
-<html>
-	<head>
-<?php include('includes/metaAndCSS.html'); ?>
-	<title>Login</title>
-	</head>
-  <body>
-  <div id='page-wrap'>
-
-  	<?php include('includes/header.php'); ?>
-	<?php include('includes/navigationMenu.php'); ?>
-
-    <section class="main" id="s1">
-
-	<div>
-	<?php if
+}				
+		echo '</p><br/>';
+		if
 (!comprobarLogueado())
 	{ ?>
 <form action="login.php" method="post" class="login">
@@ -101,7 +188,7 @@ function guardarConexion($email)
     <div><input name="login" type="submit" value="login"></div>
 </form>
 
-<a href="layout.php">Atras</a>
+¿Has olvidado tu contraseña? Recuperala <a href="recuperarPassword.php">AQUI</a>
 
 <?php
 }
@@ -116,3 +203,17 @@ else
 </div>
 </body>
 </html>
+
+<?php
+	
+	
+		
+		
+	
+	
+	
+	?>
+	
+	
+	
+	
